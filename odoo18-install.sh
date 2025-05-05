@@ -28,7 +28,6 @@ if [ $postgres_install == 'True' ]; then
     echo -e "\n--- Installling Postgresql ---"
     sudo apt-get install -y postgresql
     sudo -u postgres createuser --createdb --username postgres --no-createrole --superuser --pwprompt $odoo_user
-    exit
 fi
 
 echo -e "\nCreating odoo system user named $odoo_user at $odoo_path"
@@ -39,7 +38,6 @@ sudo apt-get install -y git
 echo -e "\nDownloading Odoo 18.0"
 if [ $enterprise == "False" ]; then
     git clone https://www.github.com/odoo/odoo --depth 1 --branch 18.0 --single-branch
-    exit
 else 
     mv $enterprise_path $odoo_path    
 fi
