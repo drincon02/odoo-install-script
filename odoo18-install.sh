@@ -37,6 +37,7 @@ sudo apt-get install -y git
 
 echo -e "\nDownloading Odoo 18.0"
 if [ $enterprise == "False" ]; then
+    cd $odoo_path
     git clone https://www.github.com/odoo/odoo --depth 1 --branch 18.0 --single-branch
 else 
     mv $enterprise_path $odoo_path    
@@ -47,6 +48,7 @@ sudo apt install -y python3-venv
 sudo python3 -m venv $odoo_path/venv
 source $odoo_path/venv/bin/activate
 pip install -r $requirements_path
+cd $odoo_path
 sudo wget https://github.com/wkhtmltopdf/wkhtmltopdf/releases/download/0.12.5/wkhtmltox_0.12.5-1.bionic_amd64.deb
 sudo wget http://archive.ubuntu.com/ubuntu/pool/main/o/openssl/libssl1.1_1.1.1f-1ubuntu2_amd64.deb
 sudo dpkg -i libssl1.1_1.1.1f-1ubuntu2_amd64.deb
