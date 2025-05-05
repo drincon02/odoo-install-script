@@ -14,6 +14,7 @@ if [ $enterprise == "False" ]; then
 else
     requirements_path="$odoo_path/$enterprise_folder_name/requirements.txt"
     addons_path="$odoo_path/$enterprise_folder_name/odoo/addons"
+fi
 
 echo -e "\nUpdating server"
 sudo apt-get update
@@ -81,6 +82,7 @@ if [ $enterprise == "True" ]; then
     odoobinpath="$odoo_path/$enterprise_folder_name/odoo-bin"
 else
     odoobinpath="$odoo_path/odoo-bin"
+fi
 
 echo -e "\nCreating systemd service"
 echo "[Unit]
