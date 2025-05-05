@@ -58,6 +58,7 @@ sudo apt install -f
 deactivate
 
 echo -e "\nSetting Configuration File"
+sudo touch /etc/$odoo_user.conf
 echo "[options]
    ; This is the password that allows database operations:
    ; admin_passwd = admin
