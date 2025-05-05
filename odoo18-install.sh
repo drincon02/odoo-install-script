@@ -100,5 +100,3 @@ WantedBy=default.target"
 
 sudo chmod 755 /etc/systemd/system/$odoo_user.service
 sudo chown root: /etc/systemd/system/$odoo_user.service
-sudo systemctl enable $odoo_user.service
-sudo systemctl restart $odoo_user.service
