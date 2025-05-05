@@ -27,7 +27,7 @@ sudo apt-get install -y python3-dev libxml2-dev libxslt1-dev zlib1g-dev libsasl2
 if [ $postgres_install == 'True' ]; then
     echo -e "\n--- Installling Postgresql ---"
     sudo apt-get install -y postgresql
-    sudo su - postgres createuser --username postgres --no-createrole --superuser --pwprompt $odoo_user
+    sudo -u postgres createuser --createdb --username postgres --no-createrole --superuser --pwprompt $odoo_user
     exit
 fi
 
