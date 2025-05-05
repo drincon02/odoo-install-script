@@ -27,8 +27,7 @@ sudo apt-get install -y python3-dev libxml2-dev libxslt1-dev zlib1g-dev libsasl2
 if [ $postgres_install == 'True' ]; then
     echo -e "\n--- Installling Postgresql ---"
     sudo apt-get install -y postgresql
-    sudo su - postgres
-    createuser --createdb --username postgres --no-createrole --superuser --pwprompt $odoo_user
+    sudo su - postgres createuser --createdb --username postgres --no-createrole --superuser --pwprompt $odoo_user
     exit
 fi
 
@@ -39,7 +38,6 @@ sudo apt-get install -y git
 
 echo -e "\nDownloading Odoo 18.0"
 if [ $enterprise == "False" ]; then
-    sudo su - $odoo_user -s /bin/bash
     git clone https://www.github.com/odoo/odoo --depth 1 --branch 18.0 --single-branch
     exit
 else 
