@@ -84,6 +84,7 @@ else
 fi
 
 echo -e "\nCreating systemd service"
+sudo touch /etc/systemd/system/$odoo_user.service
 echo "[Unit]
 Description=$odoo_user
 Documentation=http://www.odoo.com
