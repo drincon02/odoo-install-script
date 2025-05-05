@@ -1,7 +1,7 @@
 #!/bin/bash
 
 enterprise="False"
-enterprise_path="/enterprise"
+enterprise_path="/enterprise/odoo-server"
 enterprise_folder_name="odoo-server"
 odoo_path="/opt/odoo18"
 odoo_user="odoo"
@@ -38,7 +38,7 @@ sudo apt-get install -y git
 echo -e "\nDownloading Odoo 18.0"
 if [ $enterprise == "False" ]; then
     cd $odoo_path
-    git clone https://www.github.com/odoo/odoo --depth 1 --branch 18.0 --single-branch
+    git clone https://www.github.com/odoo/odoo --depth 1 --branch 18.0 --single-branch .
 else 
     mv $enterprise_path $odoo_path    
 fi
