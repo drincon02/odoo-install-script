@@ -1,7 +1,7 @@
 #!/bin/bash
 PROM_VERSION="2.52.0"
 cd /opt
-wget https://github.com/prometheus/prometheus/releases/download/v${PROM_VERSION}/prometheus-${PROM_VERSION}.linux-amd64.tar.gz
+sudo wget https://github.com/prometheus/prometheus/releases/download/v${PROM_VERSION}/prometheus-${PROM_VERSION}.linux-amd64.tar.gz
 tar -xzf prometheus-${PROM_VERSION}.linux-amd64.tar.gz
 sudo mv prometheus-${PROM_VERSION}.linux-amd64 /opt/prometheus
 rm prometheus-${PROM_VERSION}.linux-amd64.tar.gz

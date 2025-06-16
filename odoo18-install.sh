@@ -231,7 +231,7 @@ sudo systemctl enable --now $odoo_user
 echo -e "\n✅ Odoo installation completed and running on port $odoo_port"
 
 ### CONFIGURATION FOR NGINX + SSL ###
-domain_name="backoffice.codesign.codes"  # <-- Set this as needed
+domain_name="domain.com"  # <-- Set this as needed
 
 echo -e "\n🌐 Installing and configuring Nginx..."
 sudo apt-get install -y nginx
@@ -304,6 +304,8 @@ EOF
 
 echo -e "\n🔗 Enabling Nginx site and restarting Nginx..."
 sudo ln -s /etc/nginx/sites-available/$domain_name /etc/nginx/sites-enabled/
+sudo rm /etc/nginx/sites-available/default
+sudo rm /etc/nginx/sites-enabled/default
 sudo nginx -t && sudo systemctl restart nginx
 
 echo -e "\n🔐 Installing Certbot for Let's Encrypt SSL..."
