@@ -166,12 +166,14 @@ sudo systemctl daemon-reload
 sudo systemctl enable --now $odoo_user
 
 echo -e "\n📊 Installing Node Exporter..."
-sudo useradd -rs /bin/false node_exporter
+NODE_EXPORTER_VERSION="1.9.1"
 cd /opt
-wget https://github.com/prometheus/node_exporter/releases/latest/download/node_exporter-1.8.0.linux-amd64.tar.gz
-tar -xzf node_exporter-1.8.0.linux-amd64.tar.gz
-sudo mv node_exporter-1.8.0.linux-amd64/node_exporter /usr/local/bin/
-rm -rf node_exporter-1.8.0*
+wget https://github.com/prometheus/node_exporter/releases/download/v${NODE_EXPORTER_VERSION}/node_exporter-${NODE_EXPORTER_VERSION}.linux-amd64.tar.gz
+tar -xzf node_exporter-${NODE_EXPORTER_VERSION}.linux-amd64.tar.gz
+sudo mv node_exporter-${NODE_EXPORTER_VERSION}.linux-amd64/node_exporter /usr/local/bin/
+rm -rf node_exporter-${NODE_EXPORTER_VERSION}*
+
+sudo useradd -rs /bin/false node_exporter
 
 sudo tee /etc/systemd/system/node_exporter.service > /dev/null <<EOF
 [Unit]
