@@ -231,19 +231,19 @@ sudo systemctl enable --now $odoo_user
 echo -e "\n✅ Odoo installation completed and running on port $odoo_port"
 
 ### CONFIGURATION FOR NGINX + SSL ###
-domain_name="yourdomain.com"  # <-- Set this as needed
+domain_name="backoffice.codesign.codes"  # <-- Set this as needed
 
 echo -e "\n🌐 Installing and configuring Nginx..."
 sudo apt-get install -y nginx
 
 echo -e "\n🌐 Creating Nginx config for domain $domain_name..."
-sudo tee /etc/nginx/sites-available/$domain_name > /dev/null <<EOF
+sudo tee /etc/nginx/sites-available/$domain_name > /dev/null <<'EOF'
 server {
     listen 80;
     server_name $domain_name www.$domain_name;
 
     location / {
-        proxy_pass http://127.0.0.1:$odoo_port;
+        proxy_pass http://127.0.0.1:8069;
         proxy_set_header Host \$host;
         proxy_set_header X-Real-IP \$remote_addr;
         proxy_set_header X-Forwarded-For \$proxy_add_x_forwarded_for;
@@ -279,12 +279,6 @@ server {
     large_client_header_buffers 4 64k;
     client_max_body_size 0;
 
-    location / {
-        proxy_pass    http://127.0.0.1:8069;
-        # by default, do not forward anything
-        proxy_redirect off;
-    }
-
     location /websocket {
         proxy_redirect off;
         proxy_pass http://127.0.0.1:8072;
@@ -305,7 +299,7 @@ server {
     proxy_buffering    on;
     expires 864000;
     proxy_pass    http://127.0.0.1:8069;
-}
+}}
 EOF
 
 echo -e "\n🔗 Enabling Nginx site and restarting Nginx..."
