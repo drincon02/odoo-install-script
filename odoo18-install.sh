@@ -71,8 +71,8 @@ exec 2>&1
 
 echo -e "\n🐍 Installing Python and build dependencies..."
 sudo apt-get install -y python3 python3-pip python3-venv
-sudo apt-get install -y build-essential libxml2-dev libxslt1-dev zlib1g-dev \\
-    libsasl2-dev libldap2-dev libssl-dev libffi-dev libjpeg-dev libpq-dev \\
+sudo apt-get install -y build-essential libxml2-dev libxslt1-dev zlib1g-dev \
+    libsasl2-dev libldap2-dev libssl-dev libffi-dev libjpeg-dev libpq-dev \
     libjpeg8-dev liblcms2-dev libblas-dev libatlas-base-dev libmysqlclient-dev
 
 if [ "$postgres_install" == "True" ]; then
