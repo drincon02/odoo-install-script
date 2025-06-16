@@ -1,8 +1,10 @@
 #!/bin/bash
+PROM_VERSION="2.52.0"
 cd /opt
-wget https://github.com/prometheus/prometheus/releases/latest/download/prometheus-2.52.0.linux-amd64.tar.gz
-tar -xzf prometheus-2.52.0.linux-amd64.tar.gz
-sudo mv prometheus-2.52.0.linux-amd64 /opt/prometheus
+wget https://github.com/prometheus/prometheus/releases/download/v${PROM_VERSION}/prometheus-${PROM_VERSION}.linux-amd64.tar.gz
+tar -xzf prometheus-${PROM_VERSION}.linux-amd64.tar.gz
+sudo mv prometheus-${PROM_VERSION}.linux-amd64 /opt/prometheus
+rm prometheus-${PROM_VERSION}.linux-amd64.tar.gz
 sudo useradd --no-create-home --shell /usr/sbin/nologin prometheus
 sudo mkdir -p /etc/prometheus /var/lib/prometheus
 sudo tee /etc/prometheus/prometheus.yml > /dev/null <<EOF

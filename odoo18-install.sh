@@ -165,68 +165,68 @@ sudo systemctl daemon-reexec
 sudo systemctl daemon-reload
 sudo systemctl enable --now $odoo_user
 
-echo -e "\n📊 Installing Node Exporter..."
-NODE_EXPORTER_VERSION="1.9.1"
-cd /opt
-wget https://github.com/prometheus/node_exporter/releases/download/v${NODE_EXPORTER_VERSION}/node_exporter-${NODE_EXPORTER_VERSION}.linux-amd64.tar.gz
-tar -xzf node_exporter-${NODE_EXPORTER_VERSION}.linux-amd64.tar.gz
-sudo mv node_exporter-${NODE_EXPORTER_VERSION}.linux-amd64/node_exporter /usr/local/bin/
-rm -rf node_exporter-${NODE_EXPORTER_VERSION}*
+# echo -e "\n📊 Installing Node Exporter..."
+# NODE_EXPORTER_VERSION="1.9.1"
+# cd /opt
+# wget https://github.com/prometheus/node_exporter/releases/download/v${NODE_EXPORTER_VERSION}/node_exporter-${NODE_EXPORTER_VERSION}.linux-amd64.tar.gz
+# tar -xzf node_exporter-${NODE_EXPORTER_VERSION}.linux-amd64.tar.gz
+# sudo mv node_exporter-${NODE_EXPORTER_VERSION}.linux-amd64/node_exporter /usr/local/bin/
+# rm -rf node_exporter-${NODE_EXPORTER_VERSION}*
 
-sudo useradd -rs /bin/false node_exporter
+# sudo useradd -rs /bin/false node_exporter
 
-sudo tee /etc/systemd/system/node_exporter.service > /dev/null <<EOF
-[Unit]
-Description=Node Exporter
-After=network.target
+# sudo tee /etc/systemd/system/node_exporter.service > /dev/null <<EOF
+# [Unit]
+# Description=Node Exporter
+# After=network.target
 
-[Service]
-User=node_exporter
-Group=node_exporter
-Type=simple
-ExecStart=/usr/local/bin/node_exporter
+# [Service]
+# User=node_exporter
+# Group=node_exporter
+# Type=simple
+# ExecStart=/usr/local/bin/node_exporter
 
-[Install]
-WantedBy=default.target
-EOF
+# [Install]
+# WantedBy=default.target
+# EOF
 
-sudo systemctl daemon-reload
-sudo systemctl enable --now node_exporter
+# sudo systemctl daemon-reload
+# sudo systemctl enable --now node_exporter
 
-echo -e "\n📊 Installing Postgres Exporter..."
-POSTGRES_EXPORTER_VERSION="0.17.1"
-cd /opt
-wget https://github.com/prometheus-community/postgres_exporter/releases/download/v${POSTGRES_EXPORTER_VERSION}/postgres_exporter-${POSTGRES_EXPORTER_VERSION}.linux-amd64.tar.gz
-tar -xzf postgres_exporter-${POSTGRES_EXPORTER_VERSION}.linux-amd64.tar.gz
-sudo mv postgres_exporter-${POSTGRES_EXPORTER_VERSION}.linux-amd64/postgres_exporter /usr/local/bin/
-rm -rf postgres_exporter-${POSTGRES_EXPORTER_VERSION}*
+# echo -e "\n📊 Installing Postgres Exporter..."
+# POSTGRES_EXPORTER_VERSION="0.17.1"
+# cd /opt
+# wget https://github.com/prometheus-community/postgres_exporter/releases/download/v${POSTGRES_EXPORTER_VERSION}/postgres_exporter-${POSTGRES_EXPORTER_VERSION}.linux-amd64.tar.gz
+# tar -xzf postgres_exporter-${POSTGRES_EXPORTER_VERSION}.linux-amd64.tar.gz
+# sudo mv postgres_exporter-${POSTGRES_EXPORTER_VERSION}.linux-amd64/postgres_exporter /usr/local/bin/
+# rm -rf postgres_exporter-${POSTGRES_EXPORTER_VERSION}*
 
-sudo useradd -rs /bin/false postgres_exporter
+# sudo useradd -rs /bin/false postgres_exporter
 
-# Create PostgreSQL metrics user
-sudo -u postgres psql -c "CREATE USER exporter PASSWORD 'exporterpassword' SUPERUSER;"
+# # Create PostgreSQL metrics user
+# sudo -u postgres psql -c "CREATE USER exporter PASSWORD 'exporterpassword' SUPERUSER;"
 
-sudo tee /etc/postgres_exporter.env > /dev/null <<EOF
-DATA_SOURCE_NAME=postgresql://exporter:exporterpassword@localhost:5432/postgres?sslmode=disable
-EOF
+# sudo tee /etc/postgres_exporter.env > /dev/null <<EOF
+# DATA_SOURCE_NAME=postgresql://exporter:exporterpassword@localhost:5432/postgres?sslmode=disable
+# EOF
 
-sudo tee /etc/systemd/system/postgres_exporter.service > /dev/null <<EOF
-[Unit]
-Description=PostgreSQL Exporter
-After=network.target
+# sudo tee /etc/systemd/system/postgres_exporter.service > /dev/null <<EOF
+# [Unit]
+# Description=PostgreSQL Exporter
+# After=network.target
 
-[Service]
-User=postgres_exporter
-Group=postgres_exporter
-EnvironmentFile=/etc/postgres_exporter.env
-ExecStart=/usr/local/bin/postgres_exporter
+# [Service]
+# User=postgres_exporter
+# Group=postgres_exporter
+# EnvironmentFile=/etc/postgres_exporter.env
+# ExecStart=/usr/local/bin/postgres_exporter
 
-[Install]
-WantedBy=multi-user.target
-EOF
+# [Install]
+# WantedBy=multi-user.target
+# EOF
 
-sudo systemctl daemon-reload
-sudo systemctl enable --now postgres_exporter
+# sudo systemctl daemon-reload
+# sudo systemctl enable --now postgres_exporter
 
 echo -e "\n✅ Odoo installation completed and running on port $odoo_port"
 
