@@ -193,16 +193,17 @@ EOF
 sudo systemctl daemon-reload
 sudo systemctl enable --now node_exporter
 
-
 echo -e "\n📊 Installing Postgres Exporter..."
-sudo useradd -rs /bin/false postgres_exporter
+POSTGRES_EXPORTER_VERSION="0.17.1"
 cd /opt
-wget https://github.com/prometheus-community/postgres_exporter/releases/latest/download/postgres_exporter-0.15.0.linux-amd64.tar.gz
-tar -xzf postgres_exporter-0.15.0.linux-amd64.tar.gz
-sudo mv postgres_exporter-0.15.0.linux-amd64/postgres_exporter /usr/local/bin/
-rm -rf postgres_exporter-0.15.0*
+wget https://github.com/prometheus-community/postgres_exporter/releases/download/v${POSTGRES_EXPORTER_VERSION}/postgres_exporter-${POSTGRES_EXPORTER_VERSION}.linux-amd64.tar.gz
+tar -xzf postgres_exporter-${POSTGRES_EXPORTER_VERSION}.linux-amd64.tar.gz
+sudo mv postgres_exporter-${POSTGRES_EXPORTER_VERSION}.linux-amd64/postgres_exporter /usr/local/bin/
+rm -rf postgres_exporter-${POSTGRES_EXPORTER_VERSION}*
 
-# Create metrics user in PostgreSQL
+sudo useradd -rs /bin/false postgres_exporter
+
+# Create PostgreSQL metrics user
 sudo -u postgres psql -c "CREATE USER exporter PASSWORD 'exporterpassword' SUPERUSER;"
 
 sudo tee /etc/postgres_exporter.env > /dev/null <<EOF
